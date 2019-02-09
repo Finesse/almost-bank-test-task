@@ -18,3 +18,8 @@ A `build` directory will be created in the project directory. Serve the content 
 ## How to test
 
 Some checks are performed during `npm start` and `npm run build`. But there are also explicit tests. Run `npm test` to run them.
+
+## Architecture concepts
+
+- [Redux](http://redux.js.org) is used to manage the application state
+- [Redux-Saga](redux-saga.js.org) is used to manage asynchronous actions
