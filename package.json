@@ -1,7 +1,13 @@
 {
-  "name": "revolut-test-task",
+  "name": "currency-exchange-test-task",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
   "dependencies": {
     "@types/jest": "^24.0.0",
     "@types/node": "^10.12.24",
@@ -17,11 +23,9 @@
     "redux-saga": "^1.0.1",
     "typescript": "^3.3.3"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+  "devDependencies": {
+    "@types/deep-freeze": "^0.1.1",
+    "deep-freeze": "^0.0.1"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -31,5 +35,9 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "author": {
+    "name": "Surgie Finesse",
+    "email": "finesserus@gmail.com"
+  }
 }
