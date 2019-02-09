@@ -9,6 +9,9 @@ export interface ReduxState {
     data?: ExchangeRatesBase;
     lastUpdateDate?: number; // Unix ms
   };
+  balance: {
+    [currency: string]: number;
+  };
 }
 
 export interface SagasDependencies {
@@ -25,5 +28,12 @@ export interface UpdateExchangeRatesFailAction extends Action<'UPDATE_EXCHANGE_R
   error: string;
 }
 
+export interface ConvertAction extends Action<'CONVERT'> {
+  sellCurrency: string;
+  sellAmount?: number; // Either sell or buy amount must be set, but not both
+  buyCurrency: string;
+  buyAmount?: number;
+}
+
 export type Action =
-  UpdateExchangeRatesAction | UpdateExchangeRatesSuccessAction | UpdateExchangeRatesFailAction;
+  UpdateExchangeRatesAction | UpdateExchangeRatesSuccessAction | UpdateExchangeRatesFailAction | ConvertAction;

@@ -12,7 +12,7 @@ The application supports all the modern browsers (IE is not in the party).
 
 1. Download the repository
 2. [Get an Open Exchange Rates app ID](https://openexchangerates.org/signup/free) and add it your environment variables under the name `REACT_APP_OPEN_EXCHANGE_RATES_APP_ID`.
-    You can do it by creating a `.env.local` file with a content like this:
+    You can add the variable by creating a `.env.local` file in the project directory with a content like this:
 
     ```
     REACT_APP_OPEN_EXCHANGE_RATES_APP_ID=your-app-id-here
@@ -35,3 +35,6 @@ Run `npm test` to run the tests.
 
 - [Redux](http://redux.js.org) is used to manage the application state
 - [Redux-Saga](redux-saga.js.org) is used to manage asynchronous actions because it allows to write very testable code
+- The architecture may seem overcomplicated.
+    I chose it to show my skills and because it fits for complex applications (which financial applications usually are).
+- [Big.js](http://github.com/MikeMcl/big.js) is used for precise money calculations (e.g. for the famous `0.1 + 0.2`)

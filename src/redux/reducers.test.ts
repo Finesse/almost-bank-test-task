@@ -6,6 +6,7 @@ import { ReduxState } from './types';
 
 describe('reducers', () => {
   it('handles UPDATE_EXCHANGE_RATES', () => {
+    // deepFreeze is used to make sure the reducer doesn't mutate the state
     expect(appReducer(deepFreeze(initialState), actions.updateExchangeRates()).exchangeRates)
       .toEqual({
         ...initialState.exchangeRates,
@@ -15,7 +16,7 @@ describe('reducers', () => {
   });
 
   it('handles UPDATE_EXCHANGE_RATES_SUCCESS', () => {
-    const state: ReduxState = {
+    const state: ReduxState = deepFreeze({
       ...initialState,
       exchangeRates: {
         ...initialState.exchangeRates,
@@ -29,9 +30,9 @@ describe('reducers', () => {
         },
         lastUpdateDate: 13242
       }
-    };
+    });
 
-    const newState = appReducer(deepFreeze(state), actions.updateExchangeRatesSuccess({
+    const newState = appReducer(state, actions.updateExchangeRatesSuccess({
       baseCurrency: 'EUR',
       rates: {
         USD: 0.64,
@@ -59,7 +60,7 @@ describe('reducers', () => {
   });
 
   it('handles UPDATE_EXCHANGE_RATES_FAIL', () => {
-    const state: ReduxState = {
+    const state: ReduxState = deepFreeze({
       ...initialState,
       exchangeRates: {
         ...initialState.exchangeRates,
@@ -73,9 +74,9 @@ describe('reducers', () => {
         },
         lastUpdateDate: 13242
       }
-    };
+    });
 
-    expect(appReducer(deepFreeze(state), actions.updateExchangeRatesFail('testing')))
+    expect(appReducer(state, actions.updateExchangeRatesFail('testing')))
       .toEqual({
         ...state,
         exchangeRates: {
@@ -84,5 +85,84 @@ describe('reducers', () => {
           updateError: 'testing'
         }
       });
+  });
+
+  describe('CONVERT action', () => {
+    const state: ReduxState = deepFreeze({
+      ...initialState,
+      exchangeRates: {
+        ...initialState.exchangeRates,
+        data: {
+          baseCurrency: 'EUR',
+          rates: {
+            USD: 1.2334,
+            GBP: 0.8922,
+            HKD: 7.34
+          }
+        }
+      },
+      balance: {
+        USD: 100,
+        EUR: 200,
+        GBP: 0.1,
+        RUB: 1500
+      }
+    });
+
+    it('handles sell', () => {
+      expect(appReducer(state, actions.convert('USD', 10, 'EUR', undefined)))
+        .toEqual({
+          ...state,
+          balance: {
+            ...state.balance,
+            USD: 90,
+            EUR: 208.11
+          }
+        });
+    });
+
+    it('handles buy', () => {
+      expect(appReducer(state, actions.convert('USD', undefined, 'EUR', 50)))
+        .toEqual({
+          ...state,
+          balance: {
+            ...state.balance,
+            USD: 38.33,
+            EUR: 250
+          }
+        });
+    });
+
+    it('handles same sell and buy currencies', () => {
+      expect(appReducer(state, actions.convert('USD', 1, 'USD', undefined))).toEqual(state);
+    });
+
+    it('handles missing currency', () => {
+      expect(appReducer(state, actions.convert('RUB', 500, 'GBP', undefined))).toEqual(state);
+    });
+
+    it('handles missing balance', () => {
+      expect(appReducer(state, actions.convert('EUR', 45.13, 'HKD', undefined)))
+        .toEqual({
+          ...state,
+          balance: {
+            ...state.balance,
+            EUR: 154.87,
+            HKD: 331.25
+          }
+        });
+    });
+
+    it('is OK with JavaScript math', () => {
+      expect(appReducer(state, actions.convert('USD', undefined, 'GBP', 0.2))) // Causes a 0.1 + 0.2 case
+        .toEqual({
+          ...state,
+          balance: {
+            ...state.balance,
+            USD: 99.72,
+            GBP: 0.3
+          }
+        });
+    });
   });
 });

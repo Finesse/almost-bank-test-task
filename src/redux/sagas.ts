@@ -4,10 +4,10 @@ import { SagasDependencies, UpdateExchangeRatesAction } from './types';
 import { ExchangeRatesBase } from '../types';
 import { exchangeRatesUpdateInterval } from '../constants';
 
-const updateExchangeRatesType: UpdateExchangeRatesAction['type'] = 'UPDATE_EXCHANGE_RATES';
+const updateExchangeRatesActionType: UpdateExchangeRatesAction['type'] = 'UPDATE_EXCHANGE_RATES';
 
 export default function* appSaga(dependencies: SagasDependencies) {
-  yield takeLeading(updateExchangeRatesType, updateExchangeRatesSaga, dependencies);
+  yield takeLeading(updateExchangeRatesActionType, updateExchangeRatesSaga, dependencies);
   yield fork(autoupdateExchangeRatesSaga);
 }
 
