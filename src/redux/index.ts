@@ -4,13 +4,18 @@ import createSagaMiddleware from 'redux-saga'
 import appReducer from './reducers';
 import appSaga from './sagas';
 import * as actions from './actions';
+import { SagasDependencies } from './types';
 
-const sagaMiddleware = createSagaMiddleware();
+function createAppStore(dependencies: SagasDependencies) {
+  const sagaMiddleware = createSagaMiddleware();
 
-const store = createStore(appReducer, composeWithDevTools(
-  applyMiddleware(sagaMiddleware)
-));
+  const store = createStore(appReducer, composeWithDevTools(
+    applyMiddleware(sagaMiddleware)
+  ));
 
-sagaMiddleware.run(appSaga);
+  sagaMiddleware.run(appSaga, dependencies);
 
-export { store, actions };
+  return store;
+}
+
+export { createAppStore, actions };
