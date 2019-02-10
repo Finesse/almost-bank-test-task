@@ -1,0 +1,64 @@
+.container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.container > :not(:first-child) {
+  margin-left: 20px;
+}
+
+.error {
+  flex: auto;
+  color: #f7e379;
+}
+
+.data {
+  flex: none;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.data > :not(:first-child) {
+  margin-left: 10px;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.updating {
+  width: 12px;
+  height: 12px;
+  animation: rotate 2s linear infinite;
+}
+
+.updating path {
+  fill: #fff;
+}
+
+@media (max-width: 768px) {
+  .container {
+    display: block;
+    text-align: center;
+  }
+
+  .container > :not(:first-child) {
+    margin-left: 0;
+    margin-top: 5px;
+  }
+
+  .data {
+    justify-content: center;
+    text-align: left;
+  }
+}

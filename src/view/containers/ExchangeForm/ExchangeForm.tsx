@@ -144,7 +144,7 @@ const ExchangeFormLoadedContainer = memo(function ExchangeFormLoadedContainer({
       sellToBuyRatio={convert(exchangeRates, 1, sellCurrency, buyCurrency)}
       buyToSellRatio={convert(exchangeRates, 1, buyCurrency, sellCurrency)}
       canSubmit={isEnoughBalance && amount !== null}
-      validationError={!isEnoughBalance && 'Not enough balance'}
+      validationError={!isEnoughBalance && 'Insufficient funds'}
       onSellCurrencySelect={setSellCurrency}
       onBuyCurrencySelect={setBuyCurrency}
       onSellAmountChange={onSellAmountChange}

@@ -1,5 +1,7 @@
 import React, { memo } from 'react';
 import ExchangeFormHalf from './ExchangeFormHalf';
+import styles from './ExchangeForm.module.css';
+import { ReactComponent as ArrowIcon } from './arrowRight.svg';
 
 interface CommonProps {
   className?: string;
@@ -40,16 +42,16 @@ type Props = CommonProps & (ErrorProps | LoadingProps | ReadyProps);
 
 function ExchangeForm(props: Props) {
   if (props.stage === 'loading') {
-    return <div>Loading the data...</div>;
+    return <div className={`${styles.message} ${props.className || ''}`}>Loading the data...</div>;
   }
 
   if (props.stage === 'error') {
-    return <div>Error: {props.error}</div>;
+    return <div className={`${styles.message} ${props.className || ''}`}>Error: {props.error}</div>;
   }
 
   return (
     <form
-      className={props.className}
+      className={`${styles.form} ${props.className || ''}`}
       onSubmit={event => {
         event.preventDefault();
         if (props.canSubmit) {
@@ -57,8 +59,8 @@ function ExchangeForm(props: Props) {
         }
       }}
     >
-      <h3>Sell</h3>
       <ExchangeFormHalf
+        className={styles.side}
         allCurrencies={props.currencies}
         currency={props.sellCurrency}
         oppositeCurrency={props.buyCurrency}
@@ -70,8 +72,9 @@ function ExchangeForm(props: Props) {
         onAmountFocus={props.onSellAmountFocus}
         negativeAmount
       />
-      <h3>Buy</h3>
+      <ArrowIcon className={styles.arrow} />
       <ExchangeFormHalf
+        className={styles.side}
         allCurrencies={props.currencies}
         currency={props.buyCurrency}
         oppositeCurrency={props.sellCurrency}
@@ -82,10 +85,12 @@ function ExchangeForm(props: Props) {
         onAmountChange={props.onBuyAmountChange}
         onAmountFocus={props.onBuyAmountFocus}
       />
-      <button disabled={!props.canSubmit}>Exchange</button>
-      {props.validationError && (
-        <div>{props.validationError}</div>
-      )}
+      <div className={styles.buttonSection}>
+        <button disabled={!props.canSubmit} className={styles.button}>Exchange</button>
+        {props.validationError && (
+          <div className={styles.validationError}>{props.validationError}</div>
+        )}
+      </div>
     </form>
   );
 }

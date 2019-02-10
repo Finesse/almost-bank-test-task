@@ -1,0 +1,82 @@
+.box {
+  min-width: 280px;
+}
+
+.control,
+.info {
+  display: flex;
+}
+
+.control {
+  height: 40px;
+}
+
+.currencySelectBox {
+  flex: auto;
+  width: 70px;
+  position: relative;
+  cursor: pointer;
+}
+
+.currencySelectBox::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  margin-top: -1px;
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 4px 4px 0;
+  border-color: #333 transparent;
+}
+
+.currencySelect,
+.amountInput {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 5px 15px;
+  border: none;
+  background: #fff;
+  color: #333;
+  outline: none;
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.currencySelect:focus,
+.amountInput:focus {
+  box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.currencySelect {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px 0 0 10px;
+  appearance: none;
+  cursor: inherit;
+}
+
+.amountInput {
+  flex: auto;
+  width: 180px;
+  text-align: right;
+  border-left: 1px solid #ddd;
+  border-radius: 0 10px 10px 0;
+}
+
+.info {
+  margin-top: 10px;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.info > :not(:first-child) {
+  margin-left: 10px;
+}
+
+.unit {
+  font-size: 75%;
+  font-weight: bold;
+}

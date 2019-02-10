@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import NumberFormat from 'react-number-format';
 import { currencyAmountPrecision } from '../../../constants';
+import styles from './ExchangeFormHalf.module.css';
 
 interface Props {
   allCurrencies: string[];
@@ -18,22 +19,24 @@ interface Props {
 
 function valueToNumber(value: string): number | null {
   value = value.replace(/[^\d.]+/g, '');
-  return value ? Number(value) : null;
+  return /[0-9]/.test(value) ? Number(value) : null;
 }
 
 function ExchangeFormHalf(props: Props) {
   return (
-    <div className={props.className}>
-      <div>
-        Currency:
-        <select value={props.currency} onChange={event => props.onCurrencySelect(event.target.value)}>
-          {props.allCurrencies.map(currency => (
-            <option value={currency} key={currency}>{currency}</option>
-          ))}
-        </select>
-      </div>
-      <div>
-        Amount:
+    <div className={`${styles.box} ${props.className || ''}`}>
+      <div className={styles.control}>
+        <label className={styles.currencySelectBox}>
+          <select
+            value={props.currency}
+            onChange={event => props.onCurrencySelect(event.target.value)}
+            className={styles.currencySelect}
+          >
+            {props.allCurrencies.map(currency => (
+              <option value={currency} key={currency}>{currency}</option>
+            ))}
+          </select>
+        </label>
         <NumberFormat
           // type="tel" is not used because the iOS phone keyboard doesn't have a dot or a comma
           decimalScale={currencyAmountPrecision}
@@ -42,12 +45,21 @@ function ExchangeFormHalf(props: Props) {
           value={props.amount === null ? '' : props.amount}
           onChange={event => props.onAmountChange(valueToNumber(event.target.value))} // The `onValueChange` is not used because it fires an event when the value is changed by props too
           onFocus={props.onAmountFocus}
+          className={styles.amountInput}
         />
       </div>
-      <div>You have {props.balance} {props.currency}</div>
-      {props.convertRatio !== null && (
-        <div>1 {props.currency} ≈ {props.convertRatio} {props.oppositeCurrency}</div>
-      )}
+      <div className={styles.info}>
+        <div>
+          You have {props.balance} <span className={styles.unit}>{props.currency}</span>
+        </div>
+        {props.convertRatio !== null && (
+          <div>
+            1 <span className={styles.unit}>{props.currency}</span>
+            {' ≈ '}
+            {props.convertRatio} <span className={styles.unit}>{props.oppositeCurrency}</span>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
