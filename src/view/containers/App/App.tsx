@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ExchangeForm } from '..';
+import { ExchangeForm, UpdateStatus } from '..';
 import styles from './App.module.css';
 
 class App extends Component {
@@ -7,7 +7,10 @@ class App extends Component {
     return (
       <div className={styles.app}>
         Welcome to the currency exchange office
+        <hr />
         <ExchangeForm />
+        <hr />
+        <UpdateStatus />
       </div>
     );
   }

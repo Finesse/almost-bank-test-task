@@ -7,7 +7,7 @@ export interface ReduxState {
     areUpdating: boolean;
     updateError?: string;
     data?: ExchangeRatesBase;
-    lastUpdateDate?: number; // Unix ms
+    lastUpdateDate?: number; // Last successful update; unix ms
   };
   balance: BalanceDictionary;
 }
