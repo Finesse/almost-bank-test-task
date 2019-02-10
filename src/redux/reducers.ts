@@ -3,36 +3,9 @@ import convertCurrency from '../helpers/currencyConverter';
 import { ReduxState, Action } from './types';
 import initialState from './initialState';
 
-function exchangeRatesReducer(state: ReduxState['exchangeRates'], action: Action): ReduxState['exchangeRates'] {
-  switch (action.type) {
-    case 'UPDATE_EXCHANGE_RATES':
-      return {
-        ...state,
-        areUpdating: true,
-        updateError: undefined
-      };
-    case 'UPDATE_EXCHANGE_RATES_SUCCESS':
-      return {
-        ...state,
-        areUpdating: false,
-        updateError: undefined,
-        data: action.exchangeRates,
-        lastUpdateDate: Date.now()
-      };
-    case 'UPDATE_EXCHANGE_RATES_FAIL':
-      return {
-        ...state,
-        areUpdating: false,
-        updateError: action.error
-      };
-    default:
-      return state;
-  }
-}
-
 export default function appReducer(state: ReduxState = initialState, action: Action): ReduxState {
   switch (action.type) {
-    case 'CONVERT': {
+    case 'EXCHANGE': {
       if (state.exchangeRates.data === undefined) {
         return state;
       }
@@ -71,5 +44,32 @@ export default function appReducer(state: ReduxState = initialState, action: Act
         ...state,
         exchangeRates: exchangeRatesReducer(state.exchangeRates, action)
       };
+  }
+}
+
+function exchangeRatesReducer(state: ReduxState['exchangeRates'], action: Action): ReduxState['exchangeRates'] {
+  switch (action.type) {
+    case 'UPDATE_EXCHANGE_RATES':
+      return {
+        ...state,
+        areUpdating: true,
+        updateError: undefined
+      };
+    case 'UPDATE_EXCHANGE_RATES_SUCCESS':
+      return {
+        ...state,
+        areUpdating: false,
+        updateError: undefined,
+        data: action.exchangeRates,
+        lastUpdateDate: Date.now()
+      };
+    case 'UPDATE_EXCHANGE_RATES_FAIL':
+      return {
+        ...state,
+        areUpdating: false,
+        updateError: action.error
+      };
+    default:
+      return state;
   }
 }

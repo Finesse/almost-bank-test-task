@@ -32,13 +32,13 @@ describe('reducers', () => {
       }
     });
 
-    const newState = appReducer(state, actions.updateExchangeRatesSuccess({
+    const newState = appReducer(state, actions.updateExchangeRatesSuccess(deepFreeze({
       baseCurrency: 'EUR',
       rates: {
         USD: 0.64,
         GBP: 1.12
       }
-    }));
+    })));
 
     expect(newState.exchangeRates.lastUpdateDate).toBeGreaterThan(Date.now() - 10000);
     expect(newState).toEqual({
@@ -87,7 +87,7 @@ describe('reducers', () => {
       });
   });
 
-  describe('CONVERT action', () => {
+  describe('EXCHANGE action', () => {
     const state: ReduxState = deepFreeze({
       ...initialState,
       exchangeRates: {
@@ -110,7 +110,7 @@ describe('reducers', () => {
     });
 
     it('handles sell', () => {
-      expect(appReducer(state, actions.convert('USD', 10, 'EUR', undefined)))
+      expect(appReducer(state, actions.exchange('USD', 10, 'EUR', undefined)))
         .toEqual({
           ...state,
           balance: {
@@ -122,7 +122,7 @@ describe('reducers', () => {
     });
 
     it('handles buy', () => {
-      expect(appReducer(state, actions.convert('USD', undefined, 'EUR', 50)))
+      expect(appReducer(state, actions.exchange('USD', undefined, 'EUR', 50)))
         .toEqual({
           ...state,
           balance: {
@@ -134,15 +134,15 @@ describe('reducers', () => {
     });
 
     it('handles same sell and buy currencies', () => {
-      expect(appReducer(state, actions.convert('USD', 1, 'USD', undefined))).toEqual(state);
+      expect(appReducer(state, actions.exchange('USD', 1, 'USD', undefined))).toEqual(state);
     });
 
     it('handles missing currency', () => {
-      expect(appReducer(state, actions.convert('RUB', 500, 'GBP', undefined))).toEqual(state);
+      expect(appReducer(state, actions.exchange('RUB', 500, 'GBP', undefined))).toEqual(state);
     });
 
     it('handles missing balance', () => {
-      expect(appReducer(state, actions.convert('EUR', 45.13, 'HKD', undefined)))
+      expect(appReducer(state, actions.exchange('EUR', 45.13, 'HKD', undefined)))
         .toEqual({
           ...state,
           balance: {
@@ -154,7 +154,7 @@ describe('reducers', () => {
     });
 
     it('is OK with JavaScript math', () => {
-      expect(appReducer(state, actions.convert('USD', undefined, 'GBP', 0.2))) // Causes a 0.1 + 0.2 case
+      expect(appReducer(state, actions.exchange('USD', undefined, 'GBP', 0.2))) // Causes a 0.1 + 0.2 case
         .toEqual({
           ...state,
           balance: {

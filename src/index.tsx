@@ -6,7 +6,7 @@ import { createAppStore } from './redux';
 import { makeOpenExchangeRatesSource } from './services/exchangeRatesSource';
 import { openExchangeRatesAppId } from './constants';
 import './index.css';
-import App from './App';
+import { App } from './view/containers';
 
 const appStore = createAppStore({
   fetchExchangeRates: makeOpenExchangeRatesSource(openExchangeRatesAppId)

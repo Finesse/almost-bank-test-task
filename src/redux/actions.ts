@@ -13,11 +13,11 @@ export function updateExchangeRatesFail(error: string): Types.UpdateExchangeRate
   return { type: 'UPDATE_EXCHANGE_RATES_FAIL', error };
 }
 
-export function convert(
+export function exchange(
   sellCurrency: string, 
   sellAmount: number | undefined, 
   buyCurrency: string,
   buyAmount: number | undefined
-): Types.ConvertAction {
-  return { type: 'CONVERT', sellCurrency, sellAmount, buyCurrency, buyAmount };
+): Types.ExchangeAction {
+  return { type: 'EXCHANGE', sellCurrency, sellAmount, buyCurrency, buyAmount };
 }

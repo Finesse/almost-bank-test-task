@@ -38,3 +38,4 @@ Run `npm test` to run the tests.
 - The architecture may seem overcomplicated.
     I chose it to show my skills and because it fits for complex applications (which financial applications usually are).
 - [Big.js](http://github.com/MikeMcl/big.js) is used for precise money calculations (e.g. for the famous `0.1 + 0.2`)
+- The "beutiful" React components are stored in `src/view/components`, the "clever" React components are stored in `src/view/containers`

@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 import { RatesSource } from '../services/exchangeRatesSource';
-import { ExchangeRatesBase } from '../types';
+import { ExchangeRatesBase, BalanceDictionary } from '../types';
 
 export interface ReduxState {
   exchangeRates: {
@@ -9,9 +9,7 @@ export interface ReduxState {
     data?: ExchangeRatesBase;
     lastUpdateDate?: number; // Unix ms
   };
-  balance: {
-    [currency: string]: number;
-  };
+  balance: BalanceDictionary;
 }
 
 export interface SagasDependencies {
@@ -28,7 +26,7 @@ export interface UpdateExchangeRatesFailAction extends Action<'UPDATE_EXCHANGE_R
   error: string;
 }
 
-export interface ConvertAction extends Action<'CONVERT'> {
+export interface ExchangeAction extends Action<'EXCHANGE'> {
   sellCurrency: string;
   sellAmount?: number; // Either sell or buy amount must be set, but not both
   buyCurrency: string;
@@ -36,4 +34,4 @@ export interface ConvertAction extends Action<'CONVERT'> {
 }
 
 export type Action =
-  UpdateExchangeRatesAction | UpdateExchangeRatesSuccessAction | UpdateExchangeRatesFailAction | ConvertAction;
+  UpdateExchangeRatesAction | UpdateExchangeRatesSuccessAction | UpdateExchangeRatesFailAction | ExchangeAction;
