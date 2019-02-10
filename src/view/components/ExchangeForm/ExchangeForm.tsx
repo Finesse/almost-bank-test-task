@@ -59,6 +59,7 @@ function ExchangeForm(props: Props) {
         onCurrencySelect={props.onSellCurrencySelect}
         onAmountChange={props.onSellAmountChange}
         onAmountFocus={props.onSellAmountFocus}
+        negativeAmount
       />
       <h3>Buy</h3>
       <ExchangeFormHalf

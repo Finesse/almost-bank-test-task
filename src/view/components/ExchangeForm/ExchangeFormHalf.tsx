@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import NumberFormat from 'react-number-format';
 import { currencyAmountPrecision } from '../../../constants';
 
 interface Props {
@@ -8,10 +9,16 @@ interface Props {
   amount: number | null;
   balance: number;
   convertRatio: number | null;
+  negativeAmount?: boolean;
   className?: string;
   onCurrencySelect(currency: string): any;
   onAmountChange(amount: number | null): any;
   onAmountFocus(): any;
+}
+
+function valueToNumber(value: string): number | null {
+  value = value.replace(/[^\d.]+/g, '');
+  return value ? Number(value) : null;
 }
 
 function ExchangeFormHalf(props: Props) {
@@ -27,12 +34,13 @@ function ExchangeFormHalf(props: Props) {
       </div>
       <div>
         Amount:
-        <input
-          type="number"
-          min="0"
-          step={10 ** -currencyAmountPrecision}
+        <NumberFormat
+          // type="tel" is not used because the iOS phone keyboard doesn't have a dot or a comma
+          decimalScale={currencyAmountPrecision}
+          allowNegative={false}
+          prefix={props.negativeAmount ? '−' : '+'}
           value={props.amount === null ? '' : props.amount}
-          onChange={event => props.onAmountChange(event.target.value === '' ? null : Number(event.target.value))}
+          onChange={event => props.onAmountChange(valueToNumber(event.target.value))} // The `onValueChange` is not used because it fires an event when the value is changed by props too
           onFocus={props.onAmountFocus}
         />
       </div>
