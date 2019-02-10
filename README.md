@@ -1,5 +1,7 @@
 # Currency exchange test task
 
+[![Build Status](https://travis-ci.org/Finesse/currency-exchange-test-task.svg?branch=master)](https://travis-ci.org/Finesse/currency-exchange-test-task)
+
 The goal was to make a React application that simulates the currency exchange screen functionality of the given application:
 https://www.youtube.com/watch?v=c0zPSiKYipc&t=29s
 
@@ -39,3 +41,4 @@ Run `npm test` to run the tests.
     I chose it to show my skills and because it fits for complex applications (which financial applications usually are).
 - [Big.js](http://github.com/MikeMcl/big.js) is used for precise money calculations (e.g. for the famous `0.1 + 0.2`)
 - The "beutiful" React components are stored in `src/view/components`, the "clever" React components are stored in `src/view/containers`
+- Select field is a more convenient way to pick from many currencies than slider
