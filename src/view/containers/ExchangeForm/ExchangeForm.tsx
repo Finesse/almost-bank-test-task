@@ -13,8 +13,10 @@ interface OwnProps {
 }
 
 interface StateProps {
+  isUpdating: boolean;
+  updateError?: string;
   exchangeRates?: ExchangeRatesBase;
-  balance?: BalanceDictionary;
+  balance: BalanceDictionary;
 }
 
 interface ActionProps {
@@ -23,7 +25,9 @@ interface ActionProps {
 
 type Props = OwnProps & StateProps & ActionProps;
 
-type LoadedProps = OwnProps & Required<StateProps> & ActionProps;
+interface LoadedProps extends Props {
+  exchangeRates: Exclude<Props['exchangeRates'], undefined>;
+}
 
 interface AmountAndSideState {
   amount: number | null;
@@ -33,7 +37,9 @@ interface AmountAndSideState {
 function mapState(state: ReduxState): StateProps {
   return {
     exchangeRates: state.exchangeRates.data,
-    balance: state.balance
+    balance: state.balance,
+    isUpdating: state.exchangeRates.areUpdating,
+    updateError: state.exchangeRates.updateError
   };
 }
 
@@ -42,9 +48,13 @@ const containerActions: ActionProps = {
 };
 
 function ExchangeFormContainer(props: Props) {
-  return props.exchangeRates && props.balance
-    ? <ExchangeFormLoadedContainer {...props} exchangeRates={props.exchangeRates} balance={props.balance} />
-    : <ExchangeForm className={props.className} loading />;
+  if (props.exchangeRates) {
+    return <ExchangeFormLoadedContainer {...props} exchangeRates={props.exchangeRates} />;
+  } else if (props.isUpdating) {
+    return <ExchangeForm stage="loading" className={props.className} />;
+  } else {
+    return <ExchangeForm stage="error" error={props.updateError || 'Unknown error'} className={props.className} />;
+  }
 }
 
 const ExchangeFormLoadedContainer = memo(function ExchangeFormLoadedContainer({
@@ -122,8 +132,8 @@ const ExchangeFormLoadedContainer = memo(function ExchangeFormLoadedContainer({
 
   return (
     <ExchangeForm
+      stage="ready"
       className={className}
-      loading={false}
       currencies={currencies}
       sellCurrency={sellCurrency}
       buyCurrency={buyCurrency}
@@ -134,7 +144,7 @@ const ExchangeFormLoadedContainer = memo(function ExchangeFormLoadedContainer({
       sellToBuyRatio={convert(exchangeRates, 1, sellCurrency, buyCurrency)}
       buyToSellRatio={convert(exchangeRates, 1, buyCurrency, sellCurrency)}
       canSubmit={isEnoughBalance && amount !== null}
-      error={!isEnoughBalance && 'Not enough balance'}
+      validationError={!isEnoughBalance && 'Not enough balance'}
       onSellCurrencySelect={setSellCurrency}
       onBuyCurrencySelect={setBuyCurrency}
       onSellAmountChange={onSellAmountChange}

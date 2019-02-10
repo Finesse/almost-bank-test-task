@@ -30,11 +30,13 @@ describe('<ExchangeFormContainer />', () => {
     }
   };
 
-  it('renders when rates are loading', () => {
+  it('displays loading state', () => {
     const state = {
       ...mockState,
       exchangeRates: {
         ...mockState.exchangeRates,
+        areUpdating: true,
+        updateError: undefined,
         data: undefined
       }
     };
@@ -53,7 +55,29 @@ describe('<ExchangeFormContainer />', () => {
 
     const form = container.childAt(0);
     expect(form.name()).toEqual('ExchangeForm');
-    expect(form.prop('loading')).toEqual(true);
+    expect(form.prop('stage')).toEqual('loading');
+    expect(form.prop('className')).toEqual('foo');
+  });
+
+  it('displays error state', () => {
+    const state = {
+      ...mockState,
+      exchangeRates: {
+        ...mockState.exchangeRates,
+        areUpdating: false,
+        updateError: 'no key',
+        data: undefined
+      }
+    };
+    const wrapper = mount(
+      <Provider store={createMockStore(state)}>
+        <ExchangeFormContainer className="foo" />
+      </Provider>
+    );
+    const form = wrapper.childAt(0).childAt(0).childAt(0);
+    expect(form.name()).toEqual('ExchangeForm');
+    expect(form.prop('stage')).toEqual('error');
+    expect(form.prop('error')).toEqual('no key');
     expect(form.prop('className')).toEqual('foo');
   });
 
@@ -70,7 +94,7 @@ describe('<ExchangeFormContainer />', () => {
 
     const form = container.childAt(0);
     expect(form.name()).toEqual('ExchangeForm');
-    expect(form.prop('loading')).toEqual(false);
+    expect(form.prop('stage')).toEqual('ready');
     expect(form.prop('className')).toEqual('bar');
     expect(form.prop('sellCurrency')).toEqual('USD');
     expect(form.prop('buyCurrency')).toEqual('EUR');
@@ -122,7 +146,7 @@ describe('<ExchangeFormContainer />', () => {
     });
     wrapper.update();
     expect(form().prop('canSubmit')).toEqual(false);
-    expect(form().prop('error')).toBeTruthy();
+    expect(form().prop('validationError')).toBeTruthy();
   });
 
   it('changes currencies', () => {

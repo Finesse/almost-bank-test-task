@@ -6,11 +6,16 @@ interface CommonProps {
 }
 
 interface LoadingProps {
-  loading: true;
+  stage: 'loading';
+}
+
+interface ErrorProps {
+  stage: 'error';
+  error: string;
 }
 
 interface ReadyProps {
-  loading: false;
+  stage: 'ready'
   currencies: string[];
   sellCurrency: string;
   buyCurrency: string;
@@ -21,7 +26,7 @@ interface ReadyProps {
   sellToBuyRatio: number | null;
   buyToSellRatio: number | null;
   canSubmit: boolean;
-  error?: React.ReactNode;
+  validationError?: React.ReactNode;
   onSellCurrencySelect(currency: string): any;
   onBuyCurrencySelect(currency: string): any;
   onSellAmountChange(amount: number | null): any;
@@ -31,11 +36,15 @@ interface ReadyProps {
   onSubmit(): any;
 }
 
-type Props = CommonProps & (LoadingProps | ReadyProps);
+type Props = CommonProps & (ErrorProps | LoadingProps | ReadyProps);
 
 function ExchangeForm(props: Props) {
-  if (props.loading) {
+  if (props.stage === 'loading') {
     return <div>Loading the data...</div>;
+  }
+
+  if (props.stage === 'error') {
+    return <div>Error: {props.error}</div>;
   }
 
   return (
@@ -74,8 +83,8 @@ function ExchangeForm(props: Props) {
         onAmountFocus={props.onBuyAmountFocus}
       />
       <button disabled={!props.canSubmit}>Exchange</button>
-      {props.error && (
-        <div>{props.error}</div>
+      {props.validationError && (
+        <div>{props.validationError}</div>
       )}
     </form>
   );

@@ -12,7 +12,7 @@ export default memo(function UpdateStatus({ updating, lastUpdateDate, error, cla
   return (
     <div className={className}>
       {error
-        ? <span>{error}</span>
+        ? <span>Failed to update rates: {error}</span>
         : updating && <span>Updating rates...</span>
       }
       {lastUpdateDate && (
