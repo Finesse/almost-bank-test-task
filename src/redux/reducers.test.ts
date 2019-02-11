@@ -38,9 +38,8 @@ describe('reducers', () => {
         USD: 0.64,
         GBP: 1.12
       }
-    })));
+    }), 5757575));
 
-    expect(newState.exchangeRates.lastUpdateDate).toBeGreaterThan(Date.now() - 10000);
     expect(newState).toEqual({
       ...state,
       exchangeRates: {
@@ -54,7 +53,7 @@ describe('reducers', () => {
             GBP: 1.12
           }
         },
-        lastUpdateDate: newState.exchangeRates.lastUpdateDate
+        lastUpdateDate: 5757575
       }
     });
   });

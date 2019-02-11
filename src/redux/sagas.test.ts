@@ -41,7 +41,10 @@ describe('sagas', () => {
         .toEqual(call(dependencies.fetchExchangeRates!));
 
       expect(gen.next(mockExchangeRates).value)
-        .toEqual(put(actions.updateExchangeRatesSuccess(mockExchangeRates)));
+        .toEqual(call([Date, 'now']));
+      
+      expect(gen.next(7654321).value)
+        .toEqual(put(actions.updateExchangeRatesSuccess(mockExchangeRates, 7654321)));
 
       expect(gen.next().done).toEqual(true);
     });

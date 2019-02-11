@@ -61,7 +61,7 @@ function exchangeRatesReducer(state: ReduxState['exchangeRates'], action: Action
         areUpdating: false,
         updateError: undefined,
         data: action.exchangeRates,
-        lastUpdateDate: Date.now()
+        lastUpdateDate: action.date
       };
     case 'UPDATE_EXCHANGE_RATES_FAIL':
       return {

@@ -14,7 +14,8 @@ export default function* appSaga(dependencies: SagasDependencies) {
 export function* updateExchangeRatesSaga({ fetchExchangeRates }: SagasDependencies, _: UpdateExchangeRatesAction) {
   try {
     const rates: ExchangeRatesBase = yield call(fetchExchangeRates);
-    yield put(actions.updateExchangeRatesSuccess(rates));
+    const now: number = yield call([Date, 'now']);
+    yield put(actions.updateExchangeRatesSuccess(rates, now));
   } catch (error) {
     yield put(actions.updateExchangeRatesFail(error.message));
   }

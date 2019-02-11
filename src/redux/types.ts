@@ -20,6 +20,7 @@ export type UpdateExchangeRatesAction = Action<'UPDATE_EXCHANGE_RATES'>;
 
 export interface UpdateExchangeRatesSuccessAction extends Action<'UPDATE_EXCHANGE_RATES_SUCCESS'> {
   exchangeRates: ExchangeRatesBase;
+  date: number; // When the update was performed; unix ms
 }
 
 export interface UpdateExchangeRatesFailAction extends Action<'UPDATE_EXCHANGE_RATES_FAIL'> {
