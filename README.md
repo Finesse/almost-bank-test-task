@@ -10,7 +10,10 @@ https://docs.google.com/document/d/1xzUc-OAC-R7_i1DDoTnJ9wcjivK1S4b5Z-liiZurfPo/
 
 ## How to run the application
 
-The application supports all the modern browsers (IE is not in the party).
+Just open http://finesse.github.io/currency-exchange-test-task.
+The application supports all the modern browsers (IE is not at the party).
+
+If you want to run it locally:
 
 1. Download the repository
 2. Open a terminal and go to the project directory
@@ -23,8 +26,7 @@ A `build` directory will be created in the project directory. Serve the content 
 
 ## How to test
 
-Some checks are performed during `npm start` and `npm run build`.
-Run `npm test` to run the the rest tests.
+Run `npm test` to perform the tests. Another checks are performed during running `npm start` and `npm run build`.
 
 ## Architecture concepts
 
@@ -34,6 +36,6 @@ Run `npm test` to run the the rest tests.
     I chose it to show my skills and because it fits for complex applications (which financial applications usually are).
 - [Big.js](http://github.com/MikeMcl/big.js) is used for precise money calculations (e.g. for the famous `0.1 + 0.2`)
 - The "beutiful" React components are stored in `src/view/components`, the "clever" React components are stored in `src/view/containers`
-- Select field is a more convenient way to pick from many currencies than slider
+- Select field is a more convenient way than slider to pick from many currencies
 - The [FloatRates](http://floatrates.com) website is used to get exchange rates because it doesn't require an API key.
     Not requiring an API key makes the application much easier to install.
