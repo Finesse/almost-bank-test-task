@@ -1,4 +1,3 @@
-import Big from 'big.js';
 import { currencyAmountPrecision } from '../constants';
 import { ExchangeRatesBase } from '../types';
 
@@ -24,7 +23,7 @@ export default function convert(
     return null;
   }
 
-  const convertedValue = Big(value).div(baseToFromRatio).mul(baseToToRatio);
+  const convertedValue = value / baseToFromRatio * baseToToRatio;
   
   return Number(convertedValue.toFixed(currencyAmountPrecision));
 }

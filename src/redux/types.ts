@@ -1,6 +1,5 @@
 import { Action } from 'redux';
-import { RatesSource } from '../services/exchangeRatesSource';
-import { ExchangeRatesBase, BalanceDictionary } from '../types';
+import { ExchangeRatesBase, BalanceDictionary, RatesSource } from '../types';
 
 export interface ReduxState {
   exchangeRates: {

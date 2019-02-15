@@ -8,3 +8,5 @@ export interface ExchangeRatesBase {
 export interface BalanceDictionary {
   [currency: string]: number;
 }
+
+export type RatesSource = () => Promise<ExchangeRatesBase>;
