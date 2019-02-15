@@ -27,3 +27,5 @@ export const currencies = [
 ];
 
 export const currencyAmountPrecision = 2;
+
+export const currencyRatePrecision = 4;

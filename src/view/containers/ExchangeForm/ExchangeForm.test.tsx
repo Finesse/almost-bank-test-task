@@ -102,8 +102,8 @@ describe('<ExchangeFormContainer />', () => {
     expect(form.prop('buyAmount')).toBeNull();
     expect(form.prop('sellBalance')).toEqual(100);
     expect(form.prop('buyBalance')).toEqual(200);
-    expect(form.prop('sellToBuyRatio')).toEqual(0.81);
-    expect(form.prop('buyToSellRatio')).toEqual(1.23);
+    expect(form.prop('sellToBuyRatio')).toEqual(0.8108);
+    expect(form.prop('buyToSellRatio')).toEqual(1.2334);
     expect(form.prop('canSubmit')).toEqual(false);
     expect(form.prop('error')).toBeFalsy();
   });

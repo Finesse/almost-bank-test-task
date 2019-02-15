@@ -1,6 +1,6 @@
 import React, { memo, useState, useCallback } from 'react';
 import { connect } from 'react-redux';
-import { currencies } from '../../../constants';
+import { currencies, currencyRatePrecision } from '../../../constants';
 import { ExchangeRatesBase, BalanceDictionary } from '../../../types';
 import { ReduxState } from '../../../redux/types';
 import * as actions from '../../../redux/actions';
@@ -141,8 +141,8 @@ const ExchangeFormLoadedContainer = memo(function ExchangeFormLoadedContainer({
       buyAmount={buyAmount}
       sellBalance={balance[sellCurrency] || 0}
       buyBalance={balance[buyCurrency] || 0}
-      sellToBuyRatio={convert(exchangeRates, 1, sellCurrency, buyCurrency)}
-      buyToSellRatio={convert(exchangeRates, 1, buyCurrency, sellCurrency)}
+      sellToBuyRatio={convert(exchangeRates, 1, sellCurrency, buyCurrency, currencyRatePrecision)}
+      buyToSellRatio={convert(exchangeRates, 1, buyCurrency, sellCurrency, currencyRatePrecision)}
       canSubmit={isEnoughBalance && amount !== null}
       validationError={!isEnoughBalance && 'Insufficient funds'}
       onSellCurrencySelect={setSellCurrency}

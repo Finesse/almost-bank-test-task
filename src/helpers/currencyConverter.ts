@@ -7,7 +7,8 @@ export default function convert(
   { baseCurrency, rates }: ExchangeRatesBase,
   value: number,
   fromCurrency: string,
-  toCurrency: string
+  toCurrency: string,
+  precision: number = currencyAmountPrecision
 ): number | null {
   if (
     fromCurrency !== baseCurrency && !rates.hasOwnProperty(fromCurrency) ||
@@ -25,5 +26,5 @@ export default function convert(
 
   const convertedValue = value / baseToFromRatio * baseToToRatio;
   
-  return Number(convertedValue.toFixed(currencyAmountPrecision));
+  return Number(convertedValue.toFixed(precision));
 }
