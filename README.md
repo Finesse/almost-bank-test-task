@@ -6,7 +6,7 @@ The goal was to make a React application that simulates the currency exchange sc
 https://www.youtube.com/watch?v=c0zPSiKYipc&t=29s
 
 The task is described more detailed here:
-https://docs.google.com/document/d/1xzUc-OAC-R7_i1DDoTnJ9wcjivK1S4b5Z-liiZurfPo/edit
+[task.pdf](task.pdf)
 
 ## How to run the application
 
